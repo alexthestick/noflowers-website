@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>noflowers • Curated Designer Select Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #000;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-image {
+            height: 45px;
+            width: 45px;
+            object-fit: contain;
+            filter: brightness(0); /* Makes the logo black */
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #000;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 0;
+            background: #000;
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-media {
+            width: 100%;
+            height: 60vh;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #333 0%, #000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .hero-media:hover .hero-overlay {
+            opacity: 1;
+        }
+
+        .hero-text {
+            color: white;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background: white;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        /* Product Grid */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: #f5f5f5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: #000;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #333;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: #f5f5f5;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: #000;
+            color: white;
+        }
+
+        /* Featured Brands */
+        .brands-section {
+            background: #f9f9f9;
+            padding: 4rem 0;
+        }
+
+        .brand-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .brand-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200"><rect width="400" height="200" fill="%23f0f0f0"/><text x="200" y="100" text-anchor="middle" dy=".3em" font-family="Arial" font-size="14" fill="%23999">Brand Image</text></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            z-index: 1100;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            padding: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin-right: 1rem;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-remove {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            padding: 2rem;
+            border-top: 2px solid #000;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #000;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: #000;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 2rem auto 0;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .newsletter-btn {
+            background: white;
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: #f5f5f5;
+            padding: 3rem 0;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                flex-direction: column;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <img src="noflowers-logo.png" alt="noflowers" class="logo-image">
+                noflowers
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#brands">Brands</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-media">
+                <!-- Option 1: For Image -->
+                <!-- <img src="your-image.jpg" alt="Hero Image" class="hero-image"> -->
+                
+                <!-- Option 2: For Video -->
+                <!-- <video class="hero-video" autoplay muted loop>
+                    <source src="your-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video> -->
+                
+                <!-- Placeholder (remove this when you add your image/video) -->
+                <div class="hero-placeholder">
+                    <div class="hero-text">
+                        <h1>noflowers</h1>
+                        <p>Curated Designer Collections</p>
+                    </div>
+                </div>
+                
+                <!-- Optional overlay for text over image/video -->
+                <!-- <div class="hero-overlay">
+                    <div class="hero-text">
+                        <h1>Your Brand Name</h1>
+                        <p>Your tagline here</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="section" id="shop">
+        <div class="container">
+            <h2 class="section-title">Fresh Picks</h2>
+            <p style="text-align: center; margin-bottom: 3rem; font-size: 1.1rem; color: #666;">New Arrivals to the noflowers Store</p>
+            
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <button class="category-btn active" onclick="filterProducts('all')">All</button>
+                <button class="category-btn" onclick="filterProducts('hoodies')">Hoodies</button>
+                <button class="category-btn" onclick="filterProducts('pants')">Pants</button>
+                <button class="category-btn" onclick="filterProducts('jackets')">Jackets</button>
+                <button class="category-btn" onclick="filterProducts('accessories')">Accessories</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Brands -->
+    <section class="brands-section" id="brands">
+        <div class="container">
+            <h2 class="section-title">Featured Brands</h2>
+            
+            <div class="brand-card">
+                <div class="brand-image"></div>
+                <h3 class="brand-title">UNDERGROUND</h3>
+                <p>Established by creative visionaries, UNDERGROUND represents the fusion of streetwear culture with high-end design. Known for bold graphics, premium materials, and rebellious aesthetics that challenge conventional fashion norms.</p>
+            </div>
+
+            <div class="brand-card">
+                <div class="brand-image"></div>
+                <h3 class="brand-title">MINIMAL LUXE</h3>
+                <p>A contemporary fashion label that explores the intersection of minimalism and luxury. With clean lines, sustainable practices, and timeless silhouettes, MINIMAL LUXE creates pieces that transcend seasonal trends.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Join Our Community</h2>
+            <p>Subscribe for the latest news on promotions, giveaways, events, and much more!</p>
+            <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 noflowers. All rights reserved. | Curated Designer Select Shop</p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be displayed here -->
+        </div>
+        <div class="cart-total">
+            <div>Total: $<span id="cartTotal">0.00</span></div>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            { id: 1, name: "Oversized Logo Hoodie", price: 120, category: "hoodies", image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23000'/><text x='150' y='150' text-anchor='middle' dy='.3em' font-family='Arial' font-size='14' fill='white'>Hoodie</text></svg>" },
+            { id: 2, name: "Studded Cargo Pants", price: 180, category: "pants", image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23333'/><text x='150' y='150' text-anchor='middle' dy='.3em' font-family='Arial' font-size='14' fill='white'>Pants</text></svg>" },
+            { id: 3, name: "Designer Bomber Jacket", price: 250, category: "jackets", image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23666'/><text x='150' y='150' text-anchor='middle' dy='.3em' font-family='Arial' font-size='14' fill='white'>Jacket</text></svg>" },
+            { id: 4, name: "Minimalist Zip Hoodie", price: 140, category: "hoodies", image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23999'/><text x='150' y='150' text-anchor='middle' dy='.3em' font-family='Arial' font-size='14' fill='white'>Zip Hoodie</text></svg>" },
+            { id: 5, name: "Luxury Chain Necklace", price: 85, category: "accessories", image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23gold'/><text x='150' y='150' text-anchor='middle' dy='.3em' font-family='Arial' font-size='14' fill='black'>Chain</text></svg>" },
+            { id: 6, name: "Distressed Denim Jeans", price: 160, category: "pants", image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%234169E1'/><text x='150' y='150' text-anchor='middle' dy='.3em' font-family='Arial' font-size='14' fill='white'>Denim</text></svg>" }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Load products
+        function loadProducts(filter = 'all') {
+            const productGrid = document.getElementById('productGrid');
+            const filteredProducts = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            productGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">$${product.price}</p>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter products
+        function filterProducts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            loadProducts(category);
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartUI();
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            cartCount.textContent = totalItems;
+            cartTotal.textContent = totalPrice.toFixed(2);
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">Your cart is empty</p>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image"></div>
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>$${item.price} x ${item.quantity}</p>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">×</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Toggle cart
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('open');
+        }
+
+        // Checkout
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('Checkout functionality would be implemented here!');
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            alert(`Thank you for subscribing with email: ${email}`);
+            event.target.reset();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            updateCartUI();
+        });
+
+        // Close cart when clicking outside
+        document.addEventListener('click', function(event) {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartIcon = document.querySelector('.cart-icon');
+            
+            if (!cartSidebar.contains(event.target) && !cartIcon.contains(event.target)) {
+                cartSidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
